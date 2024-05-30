@@ -1,0 +1,240 @@
+body {
+    --time-picker-text-color: #273233;
+    --time-picker-font: 'Gotham', Arial, sans-serif;
+    --time-picker-clockface-background: #ebeff4;
+    --time-picker-digital-background: #ebeff4;
+    --time-picker-digital-border-color: #979797;
+    --time-picker-digital-default-opacity: 0.39;
+    --time-picker-hand-hover-color: #6236FF;
+    --time-picker-input-border-color: #ccc;
+    --time-picker-input-focus-border-color: #6236FF;
+    --time-picker-text-hover-color: #fff;
+
+}
+time-picker {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    &.focus {
+        .text-input-wrapper {
+            border: 1px solid var(--time-picker-input-focus-border-color);
+        }
+    }
+
+    .icon-clock {
+        background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDhweCIgaGVpZ2h0PSI0OHB4IiB2aWV3Qm94PSIwIDAgMjIgMjIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBpZD0iY2xvY2siIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiMyNzMyMzMiPgogICAgICAgIDxjaXJjbGUgaWQ9ImNsb2NrZmFjZSIgY3g9IjExIiBjeT0iMTEiIHI9IjEwIj48L2NpcmNsZT4KICAgICAgICA8cG9seWxpbmUgaWQ9ImhvdXJNaW51dGUiIHBvaW50cz0iMTAgNiAxMCAxMi4zNjM2MzY0IDE0IDE2Ij48L3BvbHlsaW5lPgogICAgPC9nPgo8L3N2Zz4=");
+        background-color: #fff;
+        margin-left: -20%;
+        padding: 0 .25em;
+        background-size: 1em;
+        background-position: center;
+        background-repeat: no-repeat;
+        flex: 1 1 20%;
+        cursor: pointer;
+    }
+    .hidden {
+        display: none !important;
+    }
+    .text-input-wrapper {
+        position: relative;
+        border: 1px solid var(--time-picker-input-border-color);
+        border-radius: 3px;
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-start;
+        width: 120px;
+        max-width: 120px;
+    }
+    .text-input-wrapper input {
+        border: none;
+        outline: none;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: var(--time-picker-font);
+        color: var(--time-picker-text-color);
+        flex: 1 1 100%;
+        overflow: hidden;
+    }
+    .time-picker-dialog {
+        position: absolute;
+        top: 0;
+        margin-top: 36px;
+        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.5);
+        font-family: var(--time-picker-font);
+        display: none;
+        z-index: 9;
+
+        &[active] {
+            display: block;
+        }
+    }
+    .time-picker-dialog * {
+        -webkit-user-select: none;
+        outline: 0;
+    }
+    .digital {
+        display: flex;
+        background-color: var(--time-picker-digital-background);
+        padding: 8px;
+    }
+    .hour-minute {
+        font-size: 2em;
+        width: 5em;
+        display: flex;
+        font-family: var(--time-picker-font);
+        color: var(--time-picker-text-color);
+    }
+    .hour-minute div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 4px;
+
+        &.hour-minute-separator {
+            opacity: var(--time-picker-digital-default-opacity);
+        }
+
+        &[unit] {
+            cursor: pointer;
+            margin: 0;
+            max-width: 1.5em;
+            flex: 1 1 auto;
+            font-size: 1em;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            text-align: right;
+            opacity: var(--time-picker-digital-default-opacity);
+
+            &[active] {
+                border: 1px solid var(--time-picker-digital-border-color);
+                opacity: 1;
+            }
+        }
+    }
+    .am-pm {
+        display: flex;
+        flex-direction: column;
+        color: var(--time-picker-text-color);
+
+        div[meridiem] {
+            display: block;
+            padding: 3px 8px;
+            font-family: var(--time-picker-font);
+            cursor: pointer;
+            opacity: var(--time-picker-digital-default-opacity);
+            transition: opacity 0.2s linear;
+        }
+
+        div[meridiem][active] {
+            opacity: 1;
+        }
+    }
+    .analog {
+        position: relative;
+        padding: 8px 4px;
+    }
+    .clockface {
+        position: relative;
+        cursor: pointer;
+        width: 250px;
+        height: 250px;
+        background: var(--time-picker-clockface-background);
+        border-radius: 125px;
+        cursor: pointer;
+        z-index: 1;
+    }
+    .clockface-type {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+
+        &[active] {
+            display: flex;
+        }
+    }
+    .minute,
+    .hour {
+        cursor: pointer;
+        display: flex;
+        position: absolute;
+        height: 115px;
+        top: 18px;
+        transform-origin: bottom;
+        box-sizing: border-box;
+        align-items: flex-start;
+        justify-content: center;
+
+        &::selection {
+            background-color: transparent;
+        }
+
+        &:hover:before,
+        &.active:before {
+            content: '';
+            display: block;
+            position: absolute;
+            background-color: var(--time-picker-hand-hover-color);
+            width: 1px;
+            height: 97px;
+            bottom: 0;
+        }
+
+        .text {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 8px;
+        }
+    }
+    .hour {
+        width: 30px;
+    }
+    .minute {
+        width: 8px;
+
+        &:hover, &.active {
+            visibility: visible;
+
+            .text {
+                border: 2px solid var(--time-picker-hand-hover-color);
+                width: 6px;
+                height: 6px;
+            }
+        }
+    }
+    .hour,
+    .minute:nth-child(5n + 1) {
+        height: 115px;
+        top: 18px;
+        visibility: visible;
+
+        .text {
+            width: 1em;
+            height: 1em;
+            border: 5px solid transparent;
+            border-radius: 1em;
+            visibility: visible;
+            top: 0;
+        }
+
+        &:hover .text,
+        &.active .text {
+            background-color: var(--time-picker-hand-hover-color);
+            color: var(--time-picker-text-hover-color);
+            border: 5px solid var(--time-picker-hand-hover-color);
+        }
+    }
+}

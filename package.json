@@ -1,0 +1,14 @@
+{
+  "name": "time-picker",
+  "version": "1.0.0",
+  "description": "Custom material time picker using vanilla JS web component logic",
+  "main": "time-picker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake Howell",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
